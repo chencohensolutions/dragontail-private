@@ -14,7 +14,7 @@ enum OrderItemSize {
     Large = "Large",
 }
 
-interface OrderItem {
+interface OrderItemGeneric {
     name: OrderItemName;
     size: OrderItemSize;
     quantity?: number;
@@ -26,28 +26,30 @@ interface OrderItemPizzaToppoing {
     quarterPosition: [boolean, boolean, boolean, boolean];
 }
 
-interface OrderItemPizza extends OrderItem {
+interface OrderItemPizza extends OrderItemGeneric {
     name: OrderItemName.Pizza;
     toppings: OrderItemPizzaToppoing[];
 }
 
-interface OrderItemPasta extends OrderItem {
+interface OrderItemPasta extends OrderItemGeneric {
     name: OrderItemName.Pasta;
     extraCheese: boolean;
     extraSauce: boolean;
     sauceType: string;
 }
 
+type OderItem = OrderItemGeneric | OrderItemPizza | OrderItemPasta;
+
 interface Order {
   id: string;
   name: string;
   email: string;
-  order: (OrderItemPasta | OrderItemPizza)[]
+  order: OderItem[]
 }
 
 interface OrdersState {
   orders: Order[];
-  status: "idle" | "loading" | "succeeded" | "failed";
+  status: FetchOrderStatus;
   error: string | null;
 }
 
@@ -61,7 +63,7 @@ export enum FetchOrderStatus {
 // Define the initial state using that type
 const initialState: OrdersState = {
   orders: [],
-  status: "idle",
+  status: FetchOrderStatus.Idle,
   error: null,
 };
 

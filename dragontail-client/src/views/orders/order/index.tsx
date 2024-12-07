@@ -1,10 +1,10 @@
-// import { useState } from "react";
+import { useParams } from "react-router";
 
 export const ViewOrder = () => {
-//   const [order, setOrder] = useState(null);
+  const { orderId } = useParams();
   return (
     <div>
-      <h1>Orders</h1>
+      <h1>Order {orderId}</h1>
     </div>
   );
 };
