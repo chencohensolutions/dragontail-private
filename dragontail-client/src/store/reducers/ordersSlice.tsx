@@ -1,53 +1,56 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "@/services";
 
-enum OrderItemName {
+enum EOrderItemName {
   Pizza = "Pizza",
   Pasta = "Pasta",
   Salad = "Salad",
   Drink = "Drink",
 }
-enum OrderItemSize {
+enum EOrderItemSize {
   Small = "Small",
   Medium = "Medium",
   Large = "Large",
 }
 
-interface OrderItemGeneric {
-  name: OrderItemName;
-  size: OrderItemSize;
+interface IOrderItemGeneric {
+  name: EOrderItemName;
+  size: EOrderItemSize;
   quantity?: number;
   price: number;
 }
 
-interface OrderItemPizzaToppoing {
+interface IOrderItemPizzaToppoing {
   name: string;
   quarterPosition: [boolean, boolean, boolean, boolean];
 }
 
-interface OrderItemPizza extends OrderItemGeneric {
-  name: OrderItemName.Pizza;
-  toppings: OrderItemPizzaToppoing[];
+interface IOrderItemPizza extends IOrderItemGeneric {
+  name: EOrderItemName.Pizza;
+  toppings: IOrderItemPizzaToppoing[];
 }
 
-interface OrderItemPasta extends OrderItemGeneric {
-  name: OrderItemName.Pasta;
+interface IOrderItemPasta extends IOrderItemGeneric {
+  name: EOrderItemName.Pasta;
   extraCheese: boolean;
   extraSauce: boolean;
   sauceType: string;
 }
 
-type OderItem = OrderItemGeneric | OrderItemPizza | OrderItemPasta;
+export type IOrderItem = IOrderItemGeneric | IOrderItemPizza | IOrderItemPasta;
 
-interface Order {
+export interface IOrder {
   id: string;
   name: string;
   email: string;
-  order: OderItem[];
+  address: string;
+  timestampCreated: Date;
+  timestampUpdated?: Date;
+  order: IOrderItem[];
 }
 
 interface OrdersState {
-  orders: Order[];
+  orders: IOrder[];
   status: FetchOrderStatus;
   error: string | null;
 }

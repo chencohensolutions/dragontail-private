@@ -4,8 +4,6 @@ import { store } from "@/store";
 import App from "./App";
 import "./index.scss";
 
-console.log(store);
-
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
     <App />

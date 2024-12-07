@@ -1,17 +1,41 @@
 .root {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    ul.list {
-        min-width: 200px;
-        li {
-            padding: 10px;
-            cursor: pointer;
-            &:hover {
-                background-color: #f0f0f0;
-            }
-            &.active {
-                background-color: #f0f0f0;
-            }
+  display: grid;
+  grid-template-rows: auto 1fr;
+  ul.list {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-height: 300px;
+    overflow: auto;
+    li {
+      padding: 10px;
+      display: flex;
+      flex: none;
+      flex-direction: column;
+      gap: 5px;
+      border-radius: 5px;
+      background-color: #fafafa;
+      &.active {
+        background-color: #202020;
+        color: white;
+        &:hover {
+          background-color: #202020;
         }
+      }
+      cursor: pointer;
+      .name {
+        font-weight: bold;
+      }
+      .address {
+        font-size: 0.8em;
+      }
+      &:hover {
+        background-color: #f0f0f0;
+      }
     }
+  }
 }
