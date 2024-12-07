@@ -1,41 +1,40 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "@/services";
-// Define a type for the slice state
 
 enum OrderItemName {
-    Pizza = "Pizza",
-    Pasta = "Pasta",
-    Salad = "Salad",
-    Drink = "Drink",
+  Pizza = "Pizza",
+  Pasta = "Pasta",
+  Salad = "Salad",
+  Drink = "Drink",
 }
 enum OrderItemSize {
-    Small = "Small",
-    Medium = "Medium",
-    Large = "Large",
+  Small = "Small",
+  Medium = "Medium",
+  Large = "Large",
 }
 
 interface OrderItemGeneric {
-    name: OrderItemName;
-    size: OrderItemSize;
-    quantity?: number;
-    price: number;
+  name: OrderItemName;
+  size: OrderItemSize;
+  quantity?: number;
+  price: number;
 }
 
 interface OrderItemPizzaToppoing {
-    name: string;
-    quarterPosition: [boolean, boolean, boolean, boolean];
+  name: string;
+  quarterPosition: [boolean, boolean, boolean, boolean];
 }
 
 interface OrderItemPizza extends OrderItemGeneric {
-    name: OrderItemName.Pizza;
-    toppings: OrderItemPizzaToppoing[];
+  name: OrderItemName.Pizza;
+  toppings: OrderItemPizzaToppoing[];
 }
 
 interface OrderItemPasta extends OrderItemGeneric {
-    name: OrderItemName.Pasta;
-    extraCheese: boolean;
-    extraSauce: boolean;
-    sauceType: string;
+  name: OrderItemName.Pasta;
+  extraCheese: boolean;
+  extraSauce: boolean;
+  sauceType: string;
 }
 
 type OderItem = OrderItemGeneric | OrderItemPizza | OrderItemPasta;
@@ -44,7 +43,7 @@ interface Order {
   id: string;
   name: string;
   email: string;
-  order: OderItem[]
+  order: OderItem[];
 }
 
 interface OrdersState {
@@ -60,20 +59,17 @@ export enum FetchOrderStatus {
   Failed = "failed",
 }
 
-// Define the initial state using that type
 const initialState: OrdersState = {
   orders: [],
   status: FetchOrderStatus.Idle,
   error: null,
 };
 
-// Create an async thunk to fetch orders
 export const fetchOrders = createAsyncThunk("orders/fetchOrders", async () => {
-  const response = await api.getOrders()
-  return response.data;
+  const orders = await api.getOrders();
+  return orders;
 });
 
-// Create a slice
 const ordersSlice = createSlice({
   name: "orders",
   initialState,
@@ -94,4 +90,4 @@ const ordersSlice = createSlice({
   },
 });
 
-export default ordersSlice.reducer;
+export const reducerOrders = ordersSlice.reducer;

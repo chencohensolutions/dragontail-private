@@ -1,0 +1,17 @@
+.root {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    ul.list {
+        min-width: 200px;
+        li {
+            padding: 10px;
+            cursor: pointer;
+            &:hover {
+                background-color: #f0f0f0;
+            }
+            &.active {
+                background-color: #f0f0f0;
+            }
+        }
+    }
+}

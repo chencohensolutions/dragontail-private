@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
-import { ViewOrders } from '@/views/orders';
-import { ViewOrder } from '@/views/orders/order';
-import { useAppDispatch } from '@/hooks';
-import { fetchOrders } from '@/reducers';
+import { ViewOrders, ViewOrder } from '@/views';
+import { useAppDispatch, fetchOrders } from '@/store';
 import './App.scss'
 
 const App = () => {

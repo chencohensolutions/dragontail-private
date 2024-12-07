@@ -8,7 +8,8 @@ class Api {
     });
   }
   async getOrders() {
-    return this.axiosInstance.get("/orders");
+    const response = await this.axiosInstance.get("/orders");
+    return response.data.orders;
   }
 };
 
