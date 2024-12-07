@@ -1,0 +1,24 @@
+{
+  "folders": [
+    {
+      "path": "dragontail-client"
+    },
+    {
+      "path": "dragontail-server"
+    }
+  ],
+  "settings": {},
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+		
+	
+	],
+    "compounds": [
+      {
+        "name": "debug all",
+        "configurations": ["debug server", "debug client"]
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "run server",
+      "type": "shell",
+      "command": "npx tsx --inspect --env-file=.env --watch  src/index.ts",
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^\\[tsl\\] \\d+:\\d+ - "
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Debugger listening",
+          "endsPattern": "The server is running"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "debug",
+        "showReuseMessage": false,
+        "clear": false,
+        "close": true
+      }
+    }
+  ]
+}
