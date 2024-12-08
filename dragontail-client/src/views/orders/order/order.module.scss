@@ -2,4 +2,51 @@
   display: flex;
   flex-direction: column;
   padding: 10px;
+  .record {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    .value {
+      font-weight: bold;
+    }
+  }
+  & > ul {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    & > li {
+      display: flex;
+      flex-direction: column;
+      .name {
+        font-size: larger;
+        font-weight: bold;
+      }
+      .content {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding-top: 4px;
+        padding-left: 10px;
+        .toppings {
+          & > ul {
+            li {
+              display: flex;
+              flex-direction: row;
+              gap: 10px;
+
+              .position {
+                display: flex;
+                gap: 5px;
+                flex-direction: row;
+                font-weight: bold;
+              }
+            }
+            padding-left: 10px;
+          }
+        }
+      }
+    }
+  }
 }

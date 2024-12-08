@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "@/services";
 
-enum EOrderItemName {
+export enum EOrderItemName {
   Pizza = "Pizza",
   Pasta = "Pasta",
   Salad = "Salad",
-  Drink = "Drink",
+  Other = "Other",
 }
 enum EOrderItemSize {
   Small = "Small",
@@ -13,31 +13,37 @@ enum EOrderItemSize {
   Large = "Large",
 }
 
-interface IOrderItemGeneric {
+export interface IOrderItemGeneric {
   name: EOrderItemName;
-  size: EOrderItemSize;
   quantity?: number;
   price: number;
 }
 
-interface IOrderItemPizzaToppoing {
+export interface IOrderItemPizzaToppoing {
   name: string;
-  quarterPosition: [boolean, boolean, boolean, boolean];
+  quarterPosition: [boolean, boolean, boolean, boolean]; // top left, top right, bottom right, bottom left
 }
 
-interface IOrderItemPizza extends IOrderItemGeneric {
+export interface IOrderItemOther extends IOrderItemGeneric {
+  name: EOrderItemName.Other;
+  details: string;
+}
+
+export interface IOrderItemPizza extends IOrderItemGeneric {
   name: EOrderItemName.Pizza;
+  size: EOrderItemSize;
   toppings: IOrderItemPizzaToppoing[];
 }
 
-interface IOrderItemPasta extends IOrderItemGeneric {
+export interface IOrderItemPasta extends IOrderItemGeneric {
   name: EOrderItemName.Pasta;
+  size: EOrderItemSize;
   extraCheese: boolean;
   extraSauce: boolean;
   sauceType: string;
 }
 
-export type IOrderItem = IOrderItemGeneric | IOrderItemPizza | IOrderItemPasta;
+export type IOrderItem = IOrderItemPizza | IOrderItemPasta | IOrderItemOther;
 
 export interface IOrder {
   id: string;
@@ -46,7 +52,7 @@ export interface IOrder {
   address: string;
   timestampCreated: Date;
   timestampUpdated?: Date;
-  order: IOrderItem[];
+  items: IOrderItem[];
 }
 
 interface OrdersState {

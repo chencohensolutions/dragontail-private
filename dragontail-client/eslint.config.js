@@ -14,6 +14,7 @@ export default tseslint.config(
       globals: globals.browser,
     },
     plugins: {
+      "@typescript-eslint": ts,
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
     },
@@ -25,6 +26,7 @@ export default tseslint.config(
       ],
       "no-unused-vars": "off",
       "no-undef": "error",
+
       "@typescript-eslint/no-unused-vars": "off",
     },
   }
