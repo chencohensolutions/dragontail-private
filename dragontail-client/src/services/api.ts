@@ -11,6 +11,12 @@ class Api {
     const response = await this.axiosInstance.get("/orders");
     return response.data.orders;
   }
-};
+  async advanceOrder(orderId: string) {
+    const response = await this.axiosInstance.post(
+      `/orders/${orderId}/advance`
+    );
+    return response.data.order;
+  }
+}
 
 export const api = new Api();

@@ -8,7 +8,10 @@ import {
   IOrderItemPasta,
   IOrderItemPizzaToppoing,
   EOrderItemName,
+  EOrderStatus,
   IOrderItemOther,
+  useAppDispatch,
+  advanceOrder,
 } from "@/store";
 
 import styles from "./order.module.scss";
@@ -17,6 +20,7 @@ const orderEqual = (prev: IOrder | undefined, next: IOrder | undefined) => {
   if (prev === next) return true;
   if (!prev || !next) return false;
   if (prev.id !== next.id) return false;
+  if (prev.status !== next.status) return false;
   if (prev.timestampUpdated !== next.timestampUpdated) return false;
   return true;
 };
@@ -128,6 +132,11 @@ const OrderItem = ({ item }: OrderItemProps) => {
 export const ViewOrder = () => {
   console.log("ViewOrder render");
   const { orderId } = useParams();
+  const dispatch = useAppDispatch();
+  const onAdvanceOrder = () => {
+    if (!orderId) return;
+    dispatch(advanceOrder(orderId));
+  };
   const order = useAppSelector(
     (state: RootState) => selectOrderById(state, orderId),
     orderEqual
@@ -139,6 +148,7 @@ export const ViewOrder = () => {
 
   return (
     <div className={styles.root}>
+      <div>{order.status || EOrderStatus.Pending}</div>
       <div className={styles.details}>
         <div className={styles.record}>
           <div className={styles.label}>Name:</div>
@@ -154,6 +164,9 @@ export const ViewOrder = () => {
           <OrderItem key={index} item={item} />
         ))}
       </ul>
+      <button title="Advance Order" onClick={onAdvanceOrder}>
+        Advance Order
+      </button>
     </div>
   );
 };

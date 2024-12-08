@@ -9,14 +9,14 @@ const App = () => {
 
   useEffect(() => {
     console.log("App useEffect");
-    const interval = setInterval(() => {
-      dispatch(fetchOrders());
-    }, 2000);
+    // const interval = setInterval(() => {
+    //   dispatch(fetchOrders());
+    // }, 2000);
     dispatch(fetchOrders());
 
     return () => {
       console.log("App cleanup");
-      clearInterval(interval);
+      // clearInterval(interval);
     };
   }, [dispatch]);
 

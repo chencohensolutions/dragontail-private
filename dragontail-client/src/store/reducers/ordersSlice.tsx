@@ -45,11 +45,19 @@ export interface IOrderItemPasta extends IOrderItemGeneric {
 
 export type IOrderItem = IOrderItemPizza | IOrderItemPasta | IOrderItemOther;
 
+export enum EOrderStatus {
+  Pending = "Pending",
+  InProgress = "In Progress",
+  Ready = "Ready",
+  Delivered = "Delivered",
+}
+
 export interface IOrder {
   id: string;
   name: string;
   email: string;
   address: string;
+  status: EOrderStatus;
   timestampCreated: Date;
   timestampUpdated?: Date;
   items: IOrderItem[];
@@ -79,6 +87,14 @@ export const fetchOrders = createAsyncThunk("orders/fetchOrders", async () => {
   return orders;
 });
 
+export const advanceOrder = createAsyncThunk(
+  "orders/processOrder",
+  async (orderId: string) => {
+    const order = await api.advanceOrder(orderId);
+    return order;
+  }
+);
+
 const ordersSlice = createSlice({
   name: "orders",
   initialState,
@@ -95,6 +111,20 @@ const ordersSlice = createSlice({
       .addCase(fetchOrders.rejected, (state, action) => {
         state.status = FetchOrderStatus.Failed;
         state.error = action.error.message || "Failed to fetch orders";
+      })
+      .addCase(advanceOrder.pending, (state, action) => {
+        const orderId = action.meta.arg;
+        const order = state.orders.find((order) => order.id === orderId);
+        if (order) {
+          order.status = EOrderStatus.InProgress;
+        }
+      })
+      .addCase(advanceOrder.rejected, (state, action) => {
+        const orderId = action.meta.arg;
+        const order = state.orders.find((order) => order.id === orderId);
+        if (order) {
+          order.status = EOrderStatus.InProgress;
+        }
       });
   },
 });
